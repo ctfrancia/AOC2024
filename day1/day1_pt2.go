@@ -2,22 +2,14 @@ package day1
 
 import (
 	"bufio"
-	"math"
 	"os"
 	"strconv"
 	"strings"
 )
 
-/*
-- sort the left and right column smallest to biggest
-- compare the smallest of the left column to the smallest of the right column
-- create a third column with the difference between the two
-- add column 3 to the total
-*/
-
-func Day1() (int, error) {
+func Day1Part2() (int, error) {
 	// read from a file
-	var sum int
+	var score int
 	f, err := os.Open("day1/input")
 	if err != nil {
 		return 0, err
@@ -46,26 +38,22 @@ func Day1() (int, error) {
 	if err := scanner.Err(); err != nil {
 		return 0, err
 	}
-	// order the columns
-	orderedLeft = order(orderedLeft)
-	orderedRight = order(orderedRight)
 
-	// compare the columns and find out the difference
+	// not the most efficient way to do this, but it works
 	for i := 0; i < len(orderedLeft); i++ {
-		diff := math.Abs(float64(orderedLeft[i] - orderedRight[i]))
-		sum += int(diff)
+		score += similarityScore(orderedLeft[i], orderedRight)
 	}
 
-	return sum, nil
+	return score, nil
 }
 
-func order(col []int) []int {
-	for i := 0; i < len(col); i++ {
-		for j := i + 1; j < len(col); j++ {
-			if col[j] < col[i] {
-				col[i], col[j] = col[j], col[i]
-			}
+func similarityScore(num int, list []int) int {
+	multiplier := 0
+	for _, n := range list {
+		if n == num {
+			multiplier += 1
 		}
 	}
-	return col
+
+	return num * multiplier
 }

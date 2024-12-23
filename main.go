@@ -7,5 +7,11 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	println(total)
+	println("day1: ", total)
+
+	similarityScore, err := day1.Day1Part2()
+	if err != nil {
+		panic(err)
+	}
+	println("day1 part 2: ", similarityScore)
 }
